@@ -6,13 +6,13 @@ import LoginBackground from "../assets/LoginBackground.svg"
 
 export function AuthLayout() {
   return (
-    <main style={{ backgroundImage: `url(${LoginBackground})` }} className="min-h-screen w-full grid grid-cols-2 bg-cover">
+    <main style={{ backgroundImage: `url(${LoginBackground})` }} className="h-lvh flex justify-end bg-cover pt-8">
 
-      <div/>
+      <div className="bg-white p-12 flex flex-col items-center rounded-t-4xl md:w-1/2 sm:w-full md:rounded-tr-none">
 
-      <div className="flex flex-col items-center justify-center bg-white rounded-tl-4xl">
-
-        <img src={logo} alt="HelpDesk Logo" className="mb-10 w-40 rounded-l-full"/>
+        <header>
+          <img src={logo} alt="HelpDesk Logo" className=""/>
+        </header>
         <Outlet />
 
       </div>
