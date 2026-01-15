@@ -1,3 +1,12 @@
 export function ClientCalls(){
-    return <h1>Pizza</h1>
+    return ( 
+        <div className="bg-gray-600 w-full">
+            <h1 className="text-xl text-blue-dark">Meus chamados</h1>
+            <table>
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </div>
+    )
 }

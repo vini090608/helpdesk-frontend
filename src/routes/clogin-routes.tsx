@@ -1,6 +1,6 @@
 import {Routes, Route} from "react-router"
 
-import { LoginLayout } from "../components/LoginLayout"
+import { LoginLayout } from "../components/CLoginLayout"
 
 import {ClientCalls} from "../pages/client/ClientCalls"
 import { ClientNewCalls } from "../pages/client/ClientNewCalls"
