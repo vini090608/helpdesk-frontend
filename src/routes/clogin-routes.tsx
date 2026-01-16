@@ -9,7 +9,7 @@ export function LoginRoutes(){
     return(
         <Routes>
             <Route path="/" element={<LoginLayout />}>
-                <Route index element={<ClientCalls />} />
+                <Route index element={<ClientNewCalls />} />
                 <Route path="/clientcall" element={<ClientCalls />} />
                 <Route path="/clientnewcalls" element={<ClientNewCalls />} />
             </Route>

@@ -3,39 +3,38 @@ import { Button } from "./Button";
 
 
 import ClientLogo from "../assets/ClientLogo.svg"
-import clipboard from "../assets/icon/clipboard-list.svg"
-import plus from "../assets/icon/plus.svg"
+import clipboardOff from "../assets/icons/inative/clipboard-list.svg"
+import plusOff from "../assets/icons/inative/plus1.svg"
+
+// import clipboardOn from "../assets/icons/hover/hover-clipboard-list.svg"
+// import plusOn from "../assets/icons/hover/hover-clipboard-list.svg"
 
 
 export function LoginLayout() {
   return (
     <main className=" h-lvh flex bg-gray-100">
-        <aside className="w-1/8 flex flex-col p-3">
-            <img src={ClientLogo} alt="" />
+        <aside className="w-1/8 flex flex-col p-3 justify-between">
 
             <div >
+                <img src={ClientLogo} alt="" />
                <a href="">
                     <Button className="bg-gray-100 border-none hover:bg-blue-dark">
-                        <img src={clipboard} alt="" className="pr-2 fill-white stroke-white"/>
+                        <img src={clipboardOff} alt="" className="pr-2 fill-white stroke-white"/>
                         Meus chamados
                     </Button>
                </a>
-            </div>
-
-            <div >
+            
                 <a href="">
-                    <Button className="bg-gray-100 border-none hover:bg-blue-dark">
-                        <img src={plus} alt="" 
+                    <Button className="bg-gray-100 border-none focus:bg-blue-dark">
+                        <img src={plusOff} alt="" 
                         className="pr-4"/>
                         Criar chamado
                     </Button>
                </a>
             </div >
 
-            <div className="h-0.5 bg-gray-200"></div>
-
-
-            <div>
+            <div className="h-16">
+                <div className="h-0.5 bg-gray-200"></div>
                 <img src="" alt="" />
 
                 <div>
@@ -45,6 +44,7 @@ export function LoginLayout() {
                 </div>
             </div>
         </aside>
+
         <Outlet/>
     </main>
   );
