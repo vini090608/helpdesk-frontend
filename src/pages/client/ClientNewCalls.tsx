@@ -23,19 +23,18 @@ export function ClientNewCalls() {
                     <br />
                     <Select required legend="Categoria de serviço"></Select>
                 </div>
-                <div className="border border-gray-500 p-4 rounded-2xl w-75 h-75">
+                <div className="border border-gray-500 p-4 rounded-2xl w-75 h-82">
                     <h2 className="text-md text-gray-200">Resumo</h2 >
-                    <span className="text-xs text-gray-300">Valores e detalhes</span>
-
-                    <br />
-                    <br />
-
-                    <p className="text-xs text-gray-400 ">Categoria de serviço</p>
+                    <p className="text-xs text-gray-300 relative pb-5">Valores e detalhes</p>
 
 
+                    <p className="text-xs text-gray-400">Categoria de serviço</p>
+                    <p className="text-sm text-gray-200 relative pb-5"> Erro de rede</p>
                     <p className="text-xs text-gray-400">Custo inicial</p>
+                    <p className="text-xs text-gray-200 relative pb-5">R$ <span className="text-lg text-gray-200 relative pb-10">200,00</span></p>
 
                     <span className="text-xs text-gray-300"> O chamado será automaticamente atribuído a um técnico disponível</span>
+
                     <br />
                     <br />
 

@@ -10,7 +10,7 @@ import plusOff from "../assets/icons/inative/plus1.svg"
 // import plusOn from "../assets/icons/hover/hover-clipboard-list.svg"
 
 
-export function LoginLayout() {
+export function Aside() {
   return (
     <main className=" h-lvh flex bg-gray-100">
         <aside className="w-1/8 flex flex-col p-3 justify-between">
