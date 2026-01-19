@@ -10,8 +10,7 @@ export function LoginRoutes(){
     return(
         <Routes>
             <Route path="/" element={<Aside />}>
-                <Route index element={<ClientNewCalls />} />
-                <Route path="/clientcall" element={<ClientCalls />} />
+                <Route path="/" element={<ClientCalls />} />
                 <Route path="/clientnewcalls" element={<ClientNewCalls />} />
             </Route>
 
