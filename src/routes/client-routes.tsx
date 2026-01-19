@@ -6,7 +6,7 @@ import { NotFound } from "../pages/Notfound"
 import {ClientCalls} from "../pages/client/ClientCalls"
 import { ClientNewCalls } from "../pages/client/ClientNewCalls"
 
-export function LoginRoutes(){
+export function ClientRoutes(){
     return(
         <Routes>
             <Route path="/" element={<Aside />}>
