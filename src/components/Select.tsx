@@ -1,6 +1,5 @@
 type Props = React.ComponentProps<"select"> & {
     legend?: string
-
 }
 
 export function Select({legend, children, ...rest}: Props ){

@@ -7,7 +7,7 @@ type Props = React.ComponentProps<"button"> & {
 
 const variants = {
     button: {
-        xs: "h6 w-6",
+        xs: "h7 w-7",
         sm: "h-8 ",
         md: "h-10 w-full ",
         lg: "h-12 w-full",

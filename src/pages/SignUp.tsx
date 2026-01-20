@@ -12,10 +12,6 @@ const signUpSchema = z.object({
     name: z.string().trim().min(1, {message: "Informe o nome"}),
     email: z.string().email({ message: "Informe o e-mail" }),
     password: z.string().min(6, { message: "Senha deve ter pelo menos 6 dígitos" }),
-    passwordConfirm: z.string({message: "Confirme a senha"})
-}).refine((data) => data.password === data.passwordConfirm, {
-    message: "As senhas não são iguais",
-    path: ["passwordConfirm"]
 })
 
 export function SignUp(){
@@ -39,9 +35,8 @@ export function SignUp(){
             })
 
             await api.post("/users", data)
-            if(confirm("Cadastrado com sucesso, Ir para tela de entrar?")){
-                navigate("/")
-            }   
+            
+            navigate("/")  
 
         } catch (error) {
             console.log(error)
@@ -68,11 +63,11 @@ export function SignUp(){
                     <h1 className="text-lg" >Crie sua conta</h1>
                     <span className="text-xs text-gray-300 ">Informe seu nome, e-mail e senha </span>
                 </div>
-                <Input required legend="Nome" placeholder="seu nome" onChange={(e) => setName(e.target.value)}/>
+                <Input required name="name" legend="Nome" placeholder="seu nome" onChange={(e) => setName(e.target.value)}/>
                 
-                <Input required legend="E-mail" type="email" placeholder="seu@email.com" onChange={(e) => setEmail(e.target.value)}/>
+                <Input required name="email" legend="E-mail" type="email" placeholder="seu@email.com" onChange={(e) => setEmail(e.target.value)}/>
 
-                <Input required legend="Senha" type="password" placeholder="123456" onChange={(e) => setPassword(e.target.value)}/>
+                <Input required name="password" legend="Senha" type="password" placeholder="123456" onChange={(e) => setPassword(e.target.value)}/>
 
                 <span className="text-xs text-gray-300 italic st">Minimo de 6 dígitos</span>
 

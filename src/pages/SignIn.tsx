@@ -1,12 +1,13 @@
 import { useActionState } from "react"
 import { z, ZodError} from "zod"
 import { AxiosError } from "axios"
+import { useNavigate } from "react-router"
 
 import { api } from "../services/api"
+import { useAuth } from "../hooks/useAuth"
 
 import { Input } from "../components/Input"
 import { Button } from "../components/Button"
-import { useAuth } from "../hooks/useAuth"
 
 
 const SignInScheme = z.object({
@@ -15,11 +16,13 @@ const SignInScheme = z.object({
 })
 
 export function SignIn(){
-    const [state, formAction, isLoading] = useActionState( SignIn, null)
+    const [state, formAction, isLoading] = useActionState( LogIn, null)
 
     const auth = useAuth()
 
-    async function SignIn(_: any ,formData: FormData){
+    const navigate = useNavigate()
+
+    async function LogIn(_: any ,formData: FormData){
         try {
             const data = SignInScheme.parse({
                 email: formData.get("email"),
@@ -27,8 +30,10 @@ export function SignIn(){
             })
 
             const response = await api.post("/sessions", data)
+            
             auth.save(response.data)
-
+            
+            navigate("*")
         } catch (error) {
             console.log(error)
 
@@ -52,9 +57,9 @@ export function SignIn(){
                     <span className="text-xs text-gray-300 ">Entre usando seu e-mail e senha cadastrados </span>
                 </div>
                 
-                <Input required legend="E-mail" type="email" placeholder="seu@email.com"/>
+                <Input required name="email" legend="E-mail" type="email" placeholder="seu@email.com"/>
 
-                <Input required legend="Senha" type="password" placeholder="Digite sua senha"/>
+                <Input required name="password" legend="Senha" type="password" placeholder="Digite sua senha"/>
 
                 <p className="text-sm text-feedback-danger text-center my-4 font-medium">
                     {

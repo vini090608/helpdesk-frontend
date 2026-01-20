@@ -1,14 +1,19 @@
+type CallAPIStatus = "open" | "processing" | "ended"
+
 type CallAPIResponse = {
-    id: string
-    userId: string
-    name: string
-    category: CategoriesAPIEnum
+    id: number
+    title: string
+    description: string
+    status: CallAPIStatus
     amount: number
-    filename: string
+    userId: string
+    technicalId: string
+    category: string
     user: {
         name: string
     }
     technical: {
         name: string
     }
+    updatedAt: string
 }
