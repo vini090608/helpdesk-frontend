@@ -1,35 +1,44 @@
-import { BrowserRouter } from "react-router";
+import { Route, Routes } from "react-router"
+import { BrowserRouter } from "react-router"
 
-import { Loading } from "../components/Loading";
+import { AuthLayout } from "../components/AuthLayout"
+
+import { NotFound } from "../pages/Notfound"
+import { SignIn } from "../pages/SignIn"
+import { SignUp } from "../pages/SignUp"
 
 import { useAuth } from "../hooks/useAuth";
 
-import { AuthRoutes } from "./auth-routes";
-import { ClientRoutes } from "./client-routes";
+import { Aside } from "../components/Aside"
 
-export function Routes(){
-    const {session, isLoading} = useAuth()
+import {Calls} from "../pages/Calls"
+import { NewCalls } from "../pages/NewCalls"
+import { Technicals } from "../pages/Technicals"
+import { Services } from "../pages/Services"
+import { Clients } from "../pages/Clients"
+import { Profile } from "../pages/Profile"
 
-    function Route(){
-        switch(session?.user.role){
-            case "client":
-                return <ClientRoutes />   
-            // case "technical":
-            //     return <TechnicalRoutes />
-            // case "admin":
-            //     return <AdminRoutes />
-            default:
-                return <ClientRoutes />
-        }
-    }
+export function Index(){
+    const user = useAuth()
 
-    if(isLoading){
-        return <Loading/>
-    }
-
-    return (
+    return(
         <BrowserRouter>
-            <Route />
+        <Routes>
+            <Route path="/" element={<AuthLayout />}>
+                <Route path="/" element={<SignIn/>}/>
+                <Route path="/SignUp" element={<SignUp/>}/>
+            </Route>
+            <Route path="/" element={<Aside />}>
+                <Route path="/Calls" element={<Calls />} />
+                <Route path="/NewCalls" element={<NewCalls />} />
+                <Route path="/Technicals" element={<Technicals />} />
+                <Route path="/Services" element={<Services />} />
+                <Route path="/Clients" element={<Clients />} />
+                <Route path="/Profile" element={<Profile />} />
+            </Route>
+
+            <Route path="*" element={<NotFound/>}/>
+        </Routes>
         </BrowserRouter>
     )
 }

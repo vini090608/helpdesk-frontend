@@ -46,7 +46,7 @@ export function NewCalls() {
   return (
     <main className="bg-gray-600 w-7/8 flex flex-col items-center">
         <div className="p-12">
-            <h1 className="text-xl text-blue-dark pb-10"> Novo Chamado</h1>
+            <h1 className="text-xl text-blue-dark pb-10 font-semibold"> Novo Chamado</h1>
             {/* Colocar action={formAction} */}
             <form className="flex gap-12">
                 <div className="border border-gray-500 p-4 rounded-2xl">

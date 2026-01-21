@@ -20,7 +20,7 @@ export function SignIn(){
 
     const auth = useAuth()
 
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     async function LogIn(_: any ,formData: FormData){
         try {
@@ -33,7 +33,7 @@ export function SignIn(){
             
             auth.save(response.data)
             
-            // navigate("/")
+            navigate("/NewCalls")
         } catch (error) {
             console.log(error)
 

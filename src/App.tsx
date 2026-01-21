@@ -1,11 +1,11 @@
 import { AuthProvider } from "./contexts/AuthContexts"
 
-import { Routes } from "./routes/index"
+import { Index } from "./routes/index"
 
 export function App(){
   return (
     <AuthProvider>
-      <Routes />
+      <Index />
     </AuthProvider>
   )
 }
