@@ -19,7 +19,7 @@ export function Routes(){
             // case "admin":
             //     return <AdminRoutes />
             default:
-                return <AuthRoutes />
+                return <ClientRoutes />
         }
     }
 

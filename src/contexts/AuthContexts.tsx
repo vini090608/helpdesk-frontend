@@ -35,21 +35,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         window.location.assign("/")
     }
 
-    function loadUser(){
-        const user = localStorage.getItem(`${LOCAL_STORAGE_KEY}:user`)
+    // function loadUser(){
+    //     const user = localStorage.getItem(`${LOCAL_STORAGE_KEY}:user`)
+    //     const token = localStorage.getItem(`${LOCAL_STORAGE_KEY}:token`)
+
+    //     if(token && user){
+    //         api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+            
+    //         setSession({
+    //             token,
+    //             user: JSON.parse(user)
+    //         })
+    //     }
+
+    //     setIsLoading(false)
+    // }
+
+    function loadUser() {
+        const userStorage = localStorage.getItem(`${LOCAL_STORAGE_KEY}:user`)
         const token = localStorage.getItem(`${LOCAL_STORAGE_KEY}:token`)
 
-        if(token && user){
-            api.defaults.headers.common["Authorization"] = `Bearer ${token}`
-            
-            setSession({
-                token,
-                user: JSON.parse(user)
-            })
+        if (!token || !userStorage) {
+            setIsLoading(false)
+            return
         }
 
-        setIsLoading(false)
+        try {
+            const user = JSON.parse(userStorage)
+
+            api.defaults.headers.common["Authorization"] = `Bearer ${token}`
+
+            setSession({
+                token,
+                user
+            })
+        } catch {
+            // dados corrompidos ou inválidos
+            localStorage.removeItem(`${LOCAL_STORAGE_KEY}:user`)
+            localStorage.removeItem(`${LOCAL_STORAGE_KEY}:token`)
+            setSession(null)
+        } finally {
+            setIsLoading(false)
+        }
     }
+
 
     useEffect(() => {
         loadUser()

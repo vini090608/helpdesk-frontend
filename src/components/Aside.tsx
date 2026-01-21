@@ -17,12 +17,10 @@ export function Aside() {
 
             <div >
                 <img src={ClientLogo} alt="" />
-               <a href="">
-                    <Button className="bg-gray-100 border-none hover:bg-blue-dark">
-                        <img src={clipboardOff} alt="" className="pr-2 fill-white stroke-white"/>
-                        Meus chamados
-                    </Button>
-               </a>
+                <Button className="bg-gray-100 border-none hover:bg-blue-dark">
+                    <img src={clipboardOff} alt="" className="pr-2 fill-white stroke-white"/>
+                    Meus chamados
+                </Button>
             
                 <a href="">
                     <Button className="bg-gray-100 border-none focus:bg-blue-dark">
