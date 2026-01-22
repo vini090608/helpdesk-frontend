@@ -44,7 +44,7 @@ export function NewCalls() {
     //         }
     //     }
   return (
-    <main className="bg-gray-600 w-7/8 flex flex-col items-center">
+    <main className="flex flex-col items-center">
         <div className="p-12">
             <h1 className="text-xl text-blue-dark pb-10 font-semibold"> Novo Chamado</h1>
             {/* Colocar action={formAction} */}
