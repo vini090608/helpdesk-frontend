@@ -20,11 +20,13 @@ import plusOn from "../assets/icons/hover/hover-plus.svg"
 import usersOn from "../assets/icons/hover/hover-users.svg"
 import briefcaseOn from "../assets/icons/hover/hover-briefcase-business.svg"
 import wrenchOn from "../assets/icons/hover/hover-wrench.svg"
+import Modal from "./Modal";
 
 export function Aside() {
     const navigate = useNavigate()
     const [selected, setSelected] = useState<"calls" | "create" | "clients" | "technicals" | "services">("calls");
     const [hover, setHover] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
 
     const user = useAuth()
   return (
@@ -96,7 +98,7 @@ export function Aside() {
             <div className="flex flex-col gap-4">
                 <div className="h-0.5 bg-gray-200"></div>
 
-                <div className="flex gap-4" onClick={() => (navigate("/Profile"))}>
+                <div className="flex gap-4" onClick={() => setIsOpen(true)}>
                     <img src={UserPhoto} alt="Profile" className="rounded-full h-10"/>
                     <div>
                         <h2 className="text-sm text-gray-600">{user.session?.user.name}</h2>
@@ -109,6 +111,7 @@ export function Aside() {
         <section className="w-7/8 bg-gray-600">
             <Outlet/>
         </section>
+        <Modal isOpen={isOpen} onClose={() => { setIsOpen(false);}} children={undefined}/>
     </main>
   );
 }
