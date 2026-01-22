@@ -33,7 +33,8 @@ export function SignIn(){
             
             auth.save(response.data)
             
-            navigate("/NewCalls")
+            navigate("/Calls")
+            window.location.reload()
         } catch (error) {
             console.log(error)
 

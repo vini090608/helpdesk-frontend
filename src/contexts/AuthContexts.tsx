@@ -18,7 +18,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const [isLoading, setIsLoading] = useState(true)
 
     function save(data: UserAPIResponse){
-        localStorage.setItem(`${LOCAL_STORAGE_KEY}:user`, JSON.stringify(data.user))
+        localStorage.setItem(`${LOCAL_STORAGE_KEY}:user`, JSON.stringify(data))
         localStorage.setItem(`${LOCAL_STORAGE_KEY}:token`, data.token)
 
         api.defaults.headers.common["Authorization"] = `Bearer ${data.token}`
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }, [])
 
     return (
-    <AuthContext.Provider value={{ session, save, isLoading, remove }}>
+    <AuthContext.Provider value={{session, save, isLoading, remove }}>
         {children}
     </AuthContext.Provider>
     )

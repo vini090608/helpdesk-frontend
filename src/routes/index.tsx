@@ -30,10 +30,31 @@ export function Index(){
             </Route>
             <Route path="/" element={<Aside />}>
                 <Route path="/Calls" element={<Calls />} />
-                <Route path="/NewCalls" element={<NewCalls />} />
-                <Route path="/Technicals" element={<Technicals />} />
-                <Route path="/Services" element={<Services />} />
-                <Route path="/Clients" element={<Clients />} />
+
+                {user.session?.user.role==="client"? 
+                    <Route path="/NewCalls" element={<NewCalls />} />
+                : 
+                    ""
+                }
+
+                {user.session?.user.role==="admin"? 
+                    <Route path="/Technicals" element={<Technicals />} />
+                :
+                    ""
+                }
+                
+                {user.session?.user.role==="admin"? 
+                    <Route path="/Services" element={<Services />} />
+                :
+                    ""
+                }   
+                {user.session?.user.role==="admin"?                     
+                    <Route path="/Clients" element={<Clients />} />
+                :
+                    ""
+                }
+
+
                 <Route path="/Profile" element={<Profile />} />
             </Route>
 
