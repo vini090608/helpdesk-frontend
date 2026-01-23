@@ -15,7 +15,7 @@ export function Modal({ isOpen, onClose }: ModalProps) {
   const user = useAuth()
 
   return (
-    <div className="bg-gray-200 absolute bottom-4 left-1/7 w-50 rounded-2xl p-3" onClick={onClose}>
+    <div className="bg-gray-100 absolute bottom-4 left-1/7 w-50 rounded-2xl p-3" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="flex flex-col">
 
