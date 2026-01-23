@@ -1,94 +1,58 @@
-// import { useEffect, useState } from "react"
-// // import { AxiosError } from "axios"
-
-// import { api } from "../../services/api"
-// import { formatCurrency } from "../../utils/formatCurrency"
-// import type { CallItemProps } from "../../components/CallTable"
-
-// // interface CallAPIResponse {
-// //   calls: CallItemProps[]
-// // }
+import { useEffect, useState } from "react"
+import { api } from "../services/api"
+import { useAuth } from "../hooks/useAuth"
+import { formatCurrency } from "../utils/formatCurrency"
 
 export function Calls() {
-//   const [calls, setCalls] = useState<CallItemProps[]>([])
+  const [calls, setCalls] = useState<CallAPIResponse[]>([])
+  const { session, isLoading } = useAuth()
 
-//   const [updatedAt, setUpdatedAt] = useState("")
-//   const [id, setId] = useState("")
-//   const [title, setTitle] = useState("")
-//   const [category, setCategory] = useState("")
-//   const [amount, setAmount] = useState("")
-//   const [technicalName, setTechnicalName] = useState("")
-//   const [status, setStatus] = useState("")
+  const id = Number(session?.user.id)
 
-//   async function fetchCalls() {
-//     try {
-//       const response = await api.get<CallAPIResponse>("/calls", {
-//         params: {
-//           updatedAt: updatedAt,
-//           id: id,
-//           title: title,
-//           category: category,
-//           amount: amount,
-//           technicalName: technicalName,
-//           status: status,
-//         },
-//       })
+  useEffect(() => {
+    if (isLoading) return
+    if (!session) return
+    if (!id) return
 
-//       setCalls(response.data.calls)
-
-//     } catch (error) {
-//       if (error instanceof AxiosError) {
-//         alert(error.response?.data?.message ?? "Erro ao buscar chamados")
-//         return
-//       }
-//     }
-//   }
-
-//   useEffect(() => {
-//     fetchCalls()
-//   }, [])
+    api.get(`/calls/option/${id}`).then(response => {
+      setCalls(response.data)
+    })
+    
+    
+  }, [isLoading, session, id])
+  console.log(calls)
 
   return (
-    <div className=" p-12">
+    <div className="p-12">
       <h1 className="text-xl text-blue-dark font-semibold mb-4">
         Meus chamados
       </h1>
 
-      {/* <table className="w-full border-collapse">
+      <table>
         <thead>
-          <tr>
-            <th>Atualizado em</th>
-            <th>ID</th>
-            <th>Título</th>
-            <th>Serviço</th>
-            <th>Valor total</th>
-            <th>Técnico</th>
-            <th>Status</th>
+          <tr className="text-xs text-gray-400 gap-8">
+            <td>Atualizado em</td>
+            <td>Id</td>
+            <td>Título e Serviço</td>
+            <td>Valor total</td>
+            <td>Técnico</td>
+            <td>Status</td>
           </tr>
         </thead>
 
         <tbody>
           {calls.map(call => (
-            <tr key={call.id}>
-              <td>{call.updatedAt}</td>
-              <td>{call.id}</td>
-              <td>{call.title}</td>
-              <td>{call.category}</td>
-              <td>{formatCurrency(call.amount)}</td>
-              <td>{call.technicalName}</td>
+            <tr>
+              <td className="text-xs text-gray-200">{call.updatedAt}</td>
+              <td className="text-xs text-gray-200 font-bold">{call.id}</td>
+              <td><p className="text-sm text-gray-200 font-bold">{call.title}</p><span className="text-xs text-gray-200 font-bold">{call.category}</span></td>
+              <td>{call.amount}</td>
+              <td>{call.technical=== null ? "T" : call.technical.name}</td>
               <td>{call.status}</td>
             </tr>
           ))}
-
-          {calls.length === 0 && (
-            <tr>
-              <td colSpan={7} className="text-center">
-                Nenhum chamado encontrado
-              </td>
-            </tr>
-          )}
         </tbody>
-      </table> */}
+      </table>
     </div>
   )
 }
