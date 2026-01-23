@@ -1,3 +1,5 @@
+import React from "react"
+
 type Props = React.ComponentProps<"select"> & {
     legend?: string
 }
@@ -13,8 +15,8 @@ export function Select({legend, children, ...rest}: Props ){
 
             <select className="w-full h-12 border-b border-gray-500 px-4 text-sm text-gray-100 outline-none focus:border-b-2 focus:border-blue-dark bg-transparent"
             {...rest}>
-                <option value="" disabled hidden>Selecione</option>
-                {children}
+                <option value="default">Selecione</option>
+                {React.Children.toArray(children)}
             </select>
         </fieldset>
     )

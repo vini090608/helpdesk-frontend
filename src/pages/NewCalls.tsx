@@ -36,7 +36,7 @@ export function NewCalls() {
 
         const timer = setTimeout(() => {
             setShowAlert(false);
-        }, 3000);
+        }, 1000);
 
         return () => clearTimeout(timer);
         }, [showAlert]);
@@ -62,9 +62,9 @@ export function NewCalls() {
             service_amount: selectedService?.amount,
             client_id: clientId,
         })
-
+        
         await api.post("/calls", data) 
-        setShowAlert(true);
+        setShowAlert(true)
     } catch (error) {
         console.log(error)
 
@@ -120,7 +120,6 @@ export function NewCalls() {
                     <br />
                     <br />
 
-                    {/* Add propriedade isloading={isLoading} */}
                     <Button type="submit" variant="md" isLoading={isLoading}>
                         Criar chamado
                     </Button>
