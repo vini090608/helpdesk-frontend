@@ -21,6 +21,7 @@ import usersOn from "../assets/icons/hover/hover-users.svg"
 import briefcaseOn from "../assets/icons/hover/hover-briefcase-business.svg"
 import wrenchOn from "../assets/icons/hover/hover-wrench.svg"
 import Modal from "./Modal";
+import { Profile } from "./Profile";
 
 export function Aside() {
     const navigate = useNavigate()
@@ -29,6 +30,7 @@ export function Aside() {
     const [isOpen, setIsOpen] = useState(false);
 
     const user = useAuth()
+    const [profileOpen, setProfileOpen] = useState(false) 
   return (
     <main className=" h-lvh flex bg-gray-100">
         <aside className="w-1/8 flex flex-col p-3 justify-between">
@@ -108,10 +110,23 @@ export function Aside() {
             </div>
         </aside>
         
-        <section className="w-7/8 bg-gray-600">
+        <section className="w-7/8 borde-none rounded-tl-2xl p-12 pt-2 mt-5 bg-gray-600">
             <Outlet/>
         </section>
-        <Modal isOpen={isOpen} onClose={() => { setIsOpen(false);}} children={undefined}/>
+        <Modal
+        isOpen={isOpen}
+        onClose={() => {
+          setIsOpen(false);
+        }}
+      />
+
+      <Profile
+        isOpen={profileOpen}
+        onClose={() => {
+          setProfileOpen(false);
+        }}
+          children={undefined}
+      />
     </main>
   );
 }
