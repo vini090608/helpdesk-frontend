@@ -12,3 +12,12 @@ type UserAPIResponse = {
         profile: string
     }
 }
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserAPIRole;
+  hour: UserAPIHour;
+  profile: string;
+};
