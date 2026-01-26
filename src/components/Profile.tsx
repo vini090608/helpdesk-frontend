@@ -15,14 +15,15 @@ type ModalProps = {
 };
 
 const profileSchema = z.object({
-    name: z.string().trim().min(1, {message: "Informe  ail" }),
-    password: z.string().min(6, { message: "Senha deve ter pelo menos 6 dígitos" })
+    name: z.string().trim().min(1, {message: "Put a valid name" }),
+    email: z.email({message: "Put a valid email"}),
+    password: z.string().min(6, { message: "Put a valid password, with at least 6 characters" })
 })
 
 export function Profile({ isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
-  const [name, setName] = useState("")
+    const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLoading, setIsLoading] = useState(false)
@@ -30,35 +31,35 @@ export function Profile({ isOpen, onClose }: ModalProps) {
     const navigate = useNavigate()
 
     async function onSubmit(e: React.FormEvent){
-        e.preventDefault()
+      e.preventDefault()
 
-        try {
-            setIsLoading(true)
+      try {
+        setIsLoading(true)
 
-            const data = profileSchema.parse({
-                name, 
-                email, 
-                password,
-            })
+        const data = profileSchema.parse({
+          name, 
+          email, 
+          password,
+        })
 
-            await api.patch("/users", data)
+        await api.patch("/users", data)
 
-            navigate("/")
-        } catch (error) {
-            console.log(error)
+        navigate("/")
+      } catch (error) {
+        console.log(error)
 
-            if (error instanceof ZodError){
-                return alert(error.issues[0].message)
-            }
-
-            if (error instanceof AxiosError){
-                return alert(error.response?.data.message)
-            }
-
-            alert("Não foi possível cadastrar!")
-        } finally {
-            setIsLoading(false)
+        if (error instanceof ZodError){
+            return alert(error.issues[0].message)
         }
+
+        if (error instanceof AxiosError){
+            return alert(error.response?.data.message)
+        }
+
+        alert("Não foi possível cadastrar!")
+      } finally {
+        setIsLoading(false)
+      }
 
     }
 return (
@@ -84,29 +85,11 @@ return (
           <img src={User} alt="" className="rounded-full h-12 mb-5" />
         </div>
         <form onSubmit={onSubmit}>
-          <Input 
-            name="name" 
-            required 
-            legend="NOME"
-            type="name"
-            onChange={(e) => setName(e.target.value)}>
-          </Input>
+          <Input name="name" required legend="NOME" type="name" onChange={(e) => setName(e.target.value)}> </Input>
          
-          <Input 
-            name="email"
-            required
-            legend="E-MAIL"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}>
-          </Input>
+          <Input name="email" required legend="E-MAIL" type="email" onChange={(e) => setEmail(e.target.value)}> </Input>
           
-          <Input 
-            name="password"
-            required
-            legend="SENHA"
-            type="password"
-            onChange={(e) => setPassword(e.target.value) }>
-          </Input>
+          <Input name="password" required legend="SENHA" type="password" onChange={(e) => setPassword(e.target.value) }> </Input>
         </form>
       
 

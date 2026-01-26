@@ -5,10 +5,9 @@ type CallAPIResponse = {
     title: string
     description: string
     status: CallAPIStatus
-    amount: number
+    serviceAmount: number
     userId: string
-    technicalId: string
-    category: string
+    serviceName: string
     user: {
         name: string
     }
