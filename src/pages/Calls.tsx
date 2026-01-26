@@ -10,6 +10,10 @@ import Ended from "../assets/icons/active-circle-check-big.svg"
 import Eye from "../assets/icons/eye.svg"
 import Pencil from "../assets/icons/pen-line.svg"
 
+import Perfil from "../assets/user.png"
+import Circle from "../assets/icons/hover/hover-circle-check-big.svg"
+import Clock from "../assets/icons/hover/hover-plus.svg"
+
 export function Calls() {
   const [calls, setCalls] = useState<CallAPIResponse[]>([])
   const { session, isLoading } = useAuth()
@@ -21,12 +25,11 @@ export function Calls() {
     if (isLoading) return
     if (!session) return
     if (!id) return
-    const endpoint =
-      session.user.role === "admin"
-        ? "/calls/"
-        : session.user.role === "client" || session.user.role === "technical"
-          ? `/calls/option/${id}`
-          : ""
+    const endpoint = session.user.role === "client"
+        ? `/calls/option/${id}`
+        :
+          "/calls"
+        
     
     api.get(endpoint).then(response => {
       setCalls(response.data)
@@ -34,20 +37,22 @@ export function Calls() {
   }, [isLoading, session, id])
   
   return (
-    <main className="p-12">
+    <main className="p-8">
       <h1 className="text-xl text-blue-dark font-semibold mb-4">
         Meus chamados
       </h1>
 
-      <section className="w-fit border border-gray-400 rounded-2xl p-2">
+      <section className={`${session?.user.role==="technical"? "": "w-fit border border-gray-400 rounded-2xl p-2"}`}>
         {session?.user.role ==="admin"?
         <table className="border-collapse">
           <thead>
             <tr className="text-sm text-gray-400 border-b border-gray-400">
               <th className="px-4 py-2 text-left">Atualizado em</th>
               <th className="px-4 py-2 text-left">Id</th>
-              <th className="px-4 py-2 text-left">Título e Serviço</th>
+              <th className="px-4 py-2 text-left">Título</th>
+              <th className="px-4 py-2 text-left">Serviço</th>
               <th className="px-4 py-2 text-left">Valor total</th>
+              <th className="px-4 py-2 text-left">Cliente</th>
               <th className="px-4 py-2 text-left">Técnico</th>
               <th className="px-4 py-2 text-left">Status</th>
             </tr>
@@ -59,19 +64,20 @@ export function Calls() {
                 <td className="px-4 py-2 text-xs text-gray-200">
                   {call.updatedAt}
                 </td>
-                <td className="px-4 py-2 text-xs text-gray-200 font-bold">
+                <td className="px-4 py-2 text-xs text-gray-200 font-semibold">
                   {call.id}
                 </td>
-                <td className="px-4 py-2">
-                  <p className="text-sm text-gray-200 font-bold">
-                    {call.title}
-                  </p>
-                  <span className="text-xs text-gray-200">
-                    {call.serviceName}
-                  </span>
+                <td className="px-4 py-2 text-sm text-gray-200 font-semibold">
+                  {call.title}
+                </td>
+                <td className="px-4 py-2 text-xs text-gray-200">
+                  {call.serviceName}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
                   R$ {call.serviceAmount.toFixed(2)}
+                </td>
+                <td className="px-4 py-2 text-sm text-gray-200">
+                  {call.client ? call.client.name : ""}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
                   {call.technical ? call.technical.name : "Técnico não definido"}
@@ -156,7 +162,143 @@ export function Calls() {
           </tbody>
         </table>
         : session?.user.role ==="technical"?
-        ""
+        <section>
+          <div>
+            <div>
+              <div className="flex justify-center items-center gap-1 px-1 py-1.5 w-fit text-sm text-feedback-progress rounded-xl bg-blue-200">
+                <img src={Process} alt="" />
+                <p>Processing</p>
+              </div>
+              <div className="flex gap-4 py-6">
+                {calls.map(call => (
+                  call.status==="processing"?
+                  <div className="border border-gray-500 w-fit p-3 rounded-2xl">
+                    <div className="flex items-center gap-25 justify-between">
+                      <span className="text-xs text-gray-400">{call.id}</span>
+                      <div className="flex gap-2">
+                        <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(-1)}>
+                          <img src={Pencil} alt="" />
+                        </Button>
+                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => navigate(-1)}>
+                          <img src={Circle} alt="" />
+                          <span>Encerrar</span>
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="font-medium tex-xs">{call.title}</p>
+                    <span className="text-xs">{call.serviceName}</span>
+
+                    <div className="flex justify-between mt-3">
+                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                    </div>
+
+                    <div className="h-0.5 bg-gray-500 my-2"></div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
+                        <p className="text-xs font-medium">{call.client.name}</p>
+                      </div>
+                      <div className="flex items-center justify-center rounded-full h-6 w-6 bg-blue-200">
+                        <img src={Process} alt="" className="h-4 w-4"/>
+                      </div>
+                    </div>
+                  </div>
+                  :
+                  ""
+              ))}
+              </div>
+            </div>
+            
+            <div>
+              <div className="flex justify-center items-center gap-1 px-1 py-1.5 w-fit text-sm text-feedback-open rounded-xl bg-red-200">
+                <img src={Open} alt="" />
+                <p>Open</p>
+              </div>
+              <div className="flex gap-4 py-6">
+                {calls.map(call => (
+                  call.status==="open"?
+                  <div className="border border-gray-500 w-fit p-3 rounded-2xl">
+                    <div className="flex items-center gap-25 justify-between">
+                      <span className="text-xs text-gray-400">{call.id}</span>
+                      <div className="flex gap-2">
+                        <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(-1)}>
+                          <img src={Pencil} alt="" />
+                        </Button>
+                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => navigate(-1)}>
+                          <img src={Clock} alt="" />
+                          <span>Iniciar</span>
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="font-medium tex-xs">{call.title}</p>
+                    <span className="text-xs">{call.serviceName}</span>
+
+                    <div className="flex justify-between mt-3">
+                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                    </div>
+
+                    <div className="h-0.5 bg-gray-500 my-2"></div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
+                        <p className="text-xs font-medium">{call.client.name}</p>
+                      </div>
+                      <div className="flex items-center justify-center rounded-full h-6 w-6 bg-red-200">
+                        <img src={Open} alt="" className="h-4 w-4"/>
+                      </div>
+                    </div>
+                  </div>
+                  :
+                  ""
+              ))}
+              </div>
+            </div>
+            
+            <div>
+              <div className="flex justify-center items-center gap-1 px-1 py-1.5 w-fit text-sm text-feedback-done rounded-xl bg-green-200">
+                <img src={Ended} alt="" />
+                <p>Ended</p>
+              </div>
+              <div className="flex gap-4 py-6">
+                {calls.map(call => (
+                  call.status==="ended"?
+                  <div className="border border-gray-500 w-fit p-3 rounded-2xl">
+                    <div className="flex items-center gap-25 justify-between">
+                      <span className="text-xs text-gray-400">{call.id}</span>
+                      <div className="flex gap-2">
+                        <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(-1)}>
+                          <img src={Pencil} alt="" />
+                        </Button>
+                      </div>
+                    </div>
+                    <p className="font-medium tex-xs">{call.title}</p>
+                    <span className="text-xs">{call.serviceName}</span>
+
+                    <div className="flex justify-between mt-3">
+                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                    </div>
+
+                    <div className="h-0.5 bg-gray-500 my-2"></div>
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-1">
+                        <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
+                        <p className="text-xs font-medium">{call.client.name}</p>
+                      </div>
+                      <div className="flex items-center justify-center rounded-full h-6 w-6 bg-green-200">
+                        <img src={Ended} alt="" className="h-4 w-4"/>
+                      </div>
+                    </div>
+                  </div>
+                  :
+                  ""
+              ))}
+              </div>
+            </div>
+          </div>  
+        </section>
         :
         ""
         }

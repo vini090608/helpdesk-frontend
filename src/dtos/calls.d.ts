@@ -8,8 +8,8 @@ type CallAPIResponse = {
     serviceAmount: number
     userId: string
     serviceName: string
-    user: {
-        name: string
+    client: {
+        name: string | null
     }
     technical: {
         name: string | null
