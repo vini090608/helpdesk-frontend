@@ -8,16 +8,24 @@ type UserAPIResponse = {
         name: string
         email: string
         role: UserAPIRole
-        hour: UserAPIHour
+        hour: UserAPIHour[]
         profile: string
     }
 }
 
-type User = {
+type Client = {
   id: string;
   name: string;
   email: string;
   role: UserAPIRole;
-  hour: UserAPIHour;
   profile: string;
 };
+
+type Technical = {
+  id: string;
+  name: string;
+  email: string;
+  role: UserAPIRole;
+  hour: UserAPIHour[];
+  profile: string;
+}

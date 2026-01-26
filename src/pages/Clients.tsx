@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
 
+import Perfil from "../assets/user.png"
 import trash from "../assets/icons/trash.svg";
 import Pencil from "../assets/icons/pen-line.svg";
 import { Button } from "../components/Button";
 
+
+
 export function Clients() {
-    const [user, setUser] = useState<User[]>([]);
+    const [user, setUser] = useState<Client[]>([]);
     const { session, isLoading } = useAuth();
     // const navigate = useNavigate();
 
@@ -16,8 +19,7 @@ export function Clients() {
     if (!session) return;
 
     api.get("/users/").then((response) => {
-    setUser(response.data.user);
-    console.log(user);
+    setUser(response.data.clients);
     });
     }, [isLoading, session]);
 
@@ -37,26 +39,29 @@ return (
                 </thead>
 
                 <tbody>
-                    {user.map((client) => (
+                    {user.map((user) => (
                     <tr className="border-b border-gray-500 last:border-b-0">
-                    <td className="px-7 py-2 text-xs text-gray-200">
-                    {client.name}
-                    </td>
-                    <td className="px-70 py-2 text-xs text-gray-200 font-semibold">
-                    {client.email}
-                    </td>
+                        <td className="px-7 py-2">
+                            <div className="flex items-center gap-1">
+                                <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
+                                <p className="text-xs font-medium">{user.name}</p>
+                            </div>
+                        </td>
+                        <td className="px-70 py-2 text-xs text-gray-200">
+                        {user.email}
+                        </td>
 
-                    <td className="px-2 py-2">
-                    <Button className="bg-gray-500 w-8 h-8">
-                    <img src={trash} alt="" />
-                    </Button>
-                    </td>
+                        <td className="px-2 py-2">
+                            <Button className="bg-gray-500 w-8 h-8">
+                            <img src={trash} alt="" />
+                            </Button>
+                        </td>
 
-                    <td className="px-2 py-2">
-                    <Button className="bg-gray-500 w-8 h-8">
-                    <img src={Pencil} alt="" />
-                    </Button>
-                    </td>
+                        <td className="px-2 py-2">
+                            <Button className="bg-gray-500 w-8 h-8">
+                            <img src={Pencil} alt="" />
+                            </Button>
+                        </td>
                     </tr>
                     ))}
                 </tbody>
