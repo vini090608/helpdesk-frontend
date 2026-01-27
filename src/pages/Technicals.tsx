@@ -49,7 +49,7 @@ return (
                     <tr key={user.id} className="border-b border-gray-500 last:border-b-0">
                         <td className="px-7 py-2">
                             <div className="flex items-center gap-1">
-                                <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
+                                <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6 border border-gray-400"/>
                                 <p className="text-xs font-medium">{user.name}</p>
                             </div>
                         </td>
