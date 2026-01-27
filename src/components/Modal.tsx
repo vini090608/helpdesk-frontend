@@ -11,11 +11,11 @@ type ModalProps = {
 };
 
 export default function Modal({ isOpen, onClose }: ModalProps) {
-  if (!isOpen) return null;
-
   const navigate = useNavigate();
   const user = useAuth();
   const [profileOpen, setProfileOpen] = useState(false);
+
+  if (!isOpen) return null;
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
       {/* Modal */}
       <div
         className="absolute bottom-4 left-1/7 w-50 
-                   bg-gray-200 rounded-2xl p-3 z-40"
+                   bg-gray-100 rounded-2xl p-3 z-40"
         onClick={(e) => e.stopPropagation()}
       >
         <span className="text-gray-400 text-xxs p-3">OPÇÕES</span>

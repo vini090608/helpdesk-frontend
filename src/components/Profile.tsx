@@ -1,12 +1,12 @@
-import close from "../assets/icons/inactive/Button.svg";
 import { Button } from "./Button";
 import { Input } from "./Input";
-import User from "../assets/user.png"
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { api } from "../services/api";
-import { z, ZodError } from "zod";
-import { AxiosError } from "axios";
+import { useAuth } from "../hooks/useAuth";
+
+import User from "../assets/user.png"
+import close from "../assets/icons/inactive/Button.svg";
 
 type ModalProps = {
   isOpen: boolean;
@@ -14,90 +14,88 @@ type ModalProps = {
   children?: React.ReactNode;
 };
 
-const profileSchema = z.object({
-    name: z.string().trim().min(1, {message: "Put a valid name" }),
-    email: z.email({message: "Put a valid email"}),
-    password: z.string().min(6, { message: "Put a valid password, with at least 6 characters" })
-})
-
 export function Profile({ isOpen, onClose }: ModalProps) {
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
+  
+  const navigate = useNavigate()
+  const user = useAuth()
+
   if (!isOpen) return null;
+  
+  async function onSubmit(e: React.FormEvent) {
+    e.preventDefault()
 
-    const [name, setName] = useState("")
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [isLoading, setIsLoading] = useState(false)
+    if (!user.session?.user.id) return
 
-    const navigate = useNavigate()
+    setIsLoading(true)
 
-    async function onSubmit(e: React.FormEvent){
-      e.preventDefault()
-
-      try {
-        setIsLoading(true)
-
-        const data = profileSchema.parse({
-          name, 
-          email, 
-          password,
-        })
-
-        await api.patch("/users", data)
-
-        navigate("/")
-      } catch (error) {
-        console.log(error)
-
-        if (error instanceof ZodError){
-            return alert(error.issues[0].message)
-        }
-
-        if (error instanceof AxiosError){
-            return alert(error.response?.data.message)
-        }
-
-        alert("Não foi possível cadastrar!")
-      } finally {
-        setIsLoading(false)
-      }
-
+    try {
+      await api.patch(`/users/${user.session.user.id}`, {
+        name: name || undefined,
+        email: email || undefined,
+        password: password || undefined,
+      })
+      navigate("/")
+    } finally {
+      setIsLoading(false)
     }
-return (
-    <div>
+  }
+
+
+  return (
+    <main>
       {/* Overlay */}
-      <div
-        className="fixed inset-0 bg-black/60 z-40"
-        onClick={onClose}
-      />
+      <div className="fixed inset-0 bg-black/60 z-40"/>
 
       {/* Modal */}
-      <div
-        className="fixed left-200 top-40 w-120 h-135 
-                   bg-gray-600 rounded-2xl z-50 p-6"
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div className="fixed left-200 top-40 w-fit h-fit bg-gray-600 rounded-2xl z-50 p-6" onClick={(e) => e.stopPropagation()}>
         <div>
           <button onClick={onClose} className="absolute top-4 right-4">
             <img src={close} alt="Fechar" />
           </button>
           <h1 className="text-gray-200 text-heading-md mb-5">Perfil</h1>
           <div className="h-0.5 bg-gray-500 mb-5"/>
-          <img src={User} alt="" className="rounded-full h-12 mb-5" />
         </div>
         <form onSubmit={onSubmit}>
-          <Input name="name" required legend="NOME" type="name" onChange={(e) => setName(e.target.value)}> </Input>
-         
-          <Input name="email" required legend="E-MAIL" type="email" onChange={(e) => setEmail(e.target.value)}> </Input>
-          
-          <Input name="password" required legend="SENHA" type="password" onChange={(e) => setPassword(e.target.value) }> </Input>
-        </form>
-      
+          <div className="flex gap-2">
+            <img src={User} alt="" className="rounded-full h-12 mb-5 border border-gray-400" />
+            <div>
+              <p className="text-gray-300">{user.session?.user.name}</p>
+              <p className="text-gray-400">{user.session?.user.email}</p>
+            </div>
+          </div>
+          <Input name="name" autoComplete="off" defaultValue={user.session?.user.name} legend="NOME" type="text" onChange={(e) => setName(e.target.value)} />
 
-        <div className="h-0.5 bg-gray-500 mb-10"/>
-        <div>
-          <Button type="submit" isLoading={isLoading} >Salvar</Button>
-        </div>
+          <Input name="email" autoComplete="off" defaultValue={user.session?.user.email} legend="E-MAIL" type="email" onChange={(e) => setEmail(e.target.value)}/>
+
+          <Input name="password" autoComplete="off" legend="SENHA" type="password" onChange={(e) => setPassword(e.target.value) }/>
+
+          <div className="h-0.5 bg-gray-500"/>
+          {user.session?.user.role === "technical" ? (
+            <div className="flex flex-col gap-0.5 p-2">
+              <div className="flex flex-col">
+                <h2 className="text-sm text-gray-200">Disponibilidade</h2>
+                <p className="text-xs text-gray-300">Horários de atendimento definidos pelo admin</p>
+              </div>
+              <div className="flex pt-2">
+                {user.session?.user.hour.map((hour) => (
+                  <div key={hour} className="border border-gray-500 rounded-2xl px-1 py-0.5 w-fit text-gray-400 font-normal" >
+                    {hour.replace("H", "")}:00
+                  </div>
+                ))}
+              </div>
+              <div className="h-0.5 bg-gray-500 my-3"/>
+            </div>)
+          : 
+            null
+          }
+          <Button type="submit" isLoading={isLoading}>Salvar</Button>
+        </form>
+
       </div>
-    </div>
+    </main>
   );
 }

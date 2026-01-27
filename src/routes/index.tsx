@@ -13,6 +13,8 @@ import { Aside } from "../components/Aside"
 
 import {Calls} from "../pages/Calls"
 import { NewCalls } from "../pages/NewCalls"
+import { CallDetails } from "../pages/CallDetails"
+
 import { Technicals } from "../pages/Technicals"
 import { Services } from "../pages/Services"
 import { Clients } from "../pages/Clients"
@@ -30,6 +32,7 @@ export function Index(){
             </Route>
             <Route path="/" element={<Aside />}>
                 <Route path="/Calls" element={<Calls />} />
+                <Route path="/CallDetails/:id" element={<CallDetails />} />
 
                 {user.session?.user.role==="client"? 
                     <Route path="/NewCalls" element={<NewCalls />} />

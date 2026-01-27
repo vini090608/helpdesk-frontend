@@ -13,6 +13,8 @@ type CallAPIResponse = {
     }
     technical: {
         name: string | null
+        email: string | null
     }
     updatedAt: string
+    createdAt: string
 }
