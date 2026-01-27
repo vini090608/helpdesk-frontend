@@ -14,6 +14,15 @@ export function Clients() {
     const { session, isLoading } = useAuth();
     // const navigate = useNavigate();
 
+    async function Delete(id: number) {
+        try {
+            await api.delete(`/users/${id}`)
+            window.location.reload()
+        } catch (error) {
+            console.error("Error at deleting", error)
+        }
+    }
+
     useEffect(() => {
     if (isLoading) return;
     if (!session) return;
@@ -34,24 +43,24 @@ return (
                 <thead>
                     <tr className="text-sm text-gray-400 border-b border-gray-500">
                         <th className="px-7 py-2 text-left">Nome</th>
-                        <th className="px-70 py-2 text-left">Email</th>
+                        <th className="px-7 py-2 text-left">Email</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     {user.map((user) => (
-                    <tr className="border-b border-gray-500 last:border-b-0">
+                    <tr key={user.id} className="border-b border-gray-500 last:border-b-0">
                         <td className="px-7 py-2">
                             <div className="flex items-center gap-1">
                                 <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>
                                 <p className="text-xs font-medium">{user.name}</p>
                             </div>
                         </td>
-                        <td className="px-70 py-2 text-xs text-gray-200">
+                        <td className="px-7 py-2 text-xs text-gray-200">
                         {user.email}
                         </td>
 
-                        <td className="px-2 py-2">
+                        <td className="px-2 py-2" onClick={() => Delete(Number(user.id))}>
                             <Button className="bg-gray-500 w-8 h-8">
                             <img src={trash} alt="" />
                             </Button>

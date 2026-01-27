@@ -1,4 +1,4 @@
-type ServiceStatus = "active" | "inative"
+type ServiceStatus = "active" | "inactive"
 
 type Service = {
     name: string

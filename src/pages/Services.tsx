@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
-import { z, ZodError } from "zod"
+import { ZodError } from "zod"
 
 import Pencil from "../assets/icons/pen-line.svg";
 import { Button } from "../components/Button";
@@ -10,9 +10,6 @@ import Ban from "../assets/icons/inactive/ban.svg"
 import Check from "../assets/icons/inactive/circle-check.svg"
 import { AxiosError } from "axios";
 
-const ServiceSchema = z.object({
-    status: z.enum(["active", "inactive"]).optional(),
-})
 
 export function Services() {
     const [service, setServices] = useState<Service[]>([]);
@@ -21,12 +18,12 @@ export function Services() {
 
     async function Active(name: string) {
         try {
-            const data = ServiceSchema.parse(
-                status = "active"
-            )
+            const data = {status : "active"}
+            
 
             await api.patch(`/services/${name}`, data)
-            console.log("Updated sucessfully")
+
+            window.location.reload()
         } catch (error) {
             console.log(error)
             
@@ -44,14 +41,22 @@ export function Services() {
 
     async function Inactive(name: string) {
         try {
-            const data = ServiceSchema.parse(
-                status = "inactive"
-            )
+            const data = {status : "inactive"}
 
             await api.patch(`/services/${name}`, data)
-            console.log("Updated sucessfully")
+            window.location.reload()
         } catch (error) {
-            console.error("Error updating", error)
+            console.log(error)
+            
+            if(error instanceof ZodError){
+                return { message: error.issues[0].message}
+            }
+
+            if(error instanceof AxiosError){
+                return { message: error.response?.data.message}
+            }
+
+            return { message: "Não foi possível entrar!" }
         }
     }
 
