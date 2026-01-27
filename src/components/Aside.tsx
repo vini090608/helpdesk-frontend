@@ -9,11 +9,11 @@ import LogoOff from "../assets/iconLight.svg"
 
 import UserPhoto from "../assets/user.png"
 
-import clipboardOff from "../assets/icons/inative/clipboard-list.svg"
-import plusOff from "../assets/icons/inative/plus1.svg"
-import usersOff from "../assets/icons/inative/users.svg"
-import briefcaseOff from "../assets/icons/inative/briefcase-business.svg"
-import wrenchOff from "../assets/icons/inative/wrench.svg"
+import clipboardOff from "../assets/icons/inactive/clipboard-list.svg"
+import plusOff from "../assets/icons/inactive/plus1.svg"
+import usersOff from "../assets/icons/inactive/users.svg"
+import briefcaseOff from "../assets/icons/inactive/briefcase-business.svg"
+import wrenchOff from "../assets/icons/inactive/wrench.svg"
 
 import clipboardOn from "../assets/icons/hover/hover-clipboard-list.svg"
 import plusOn from "../assets/icons/hover/hover-plus.svg"

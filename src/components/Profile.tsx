@@ -1,4 +1,4 @@
-import close from "../assets/icons/inative/Button.svg";
+import close from "../assets/icons/inactive/Button.svg";
 import { Button } from "./Button";
 import { Input } from "./Input";
 import User from "../assets/user.png"

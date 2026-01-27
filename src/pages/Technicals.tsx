@@ -4,7 +4,7 @@ import { api } from "../services/api";
 
 import Perfil from "../assets/user.png"
 import Pencil from "../assets/icons/pen-line.svg";
-import plus from "../assets/icons/inative/plus1.svg";
+import plus from "../assets/icons/inactive/plus1.svg";
 import { Button } from "../components/Button";
 
 export function Technicals() {
@@ -46,7 +46,7 @@ return (
 
                 <tbody>
                     {user.map((user) => (
-                    <tr className="border-b border-gray-500 last:border-b-0">
+                    <tr key={user.id} className="border-b border-gray-500 last:border-b-0">
                         <td className="px-7 py-2">
                             <div className="flex items-center gap-1">
                                 <img src={Perfil} alt="perfil" className="rounded-full h-6 w-6"/>

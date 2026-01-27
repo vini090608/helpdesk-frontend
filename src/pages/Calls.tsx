@@ -42,11 +42,11 @@ export function Calls() {
         Meus chamados
       </h1>
 
-      <section className={`${session?.user.role==="technical"? "": "w-fit border border-gray-400 rounded-2xl p-2"}`}>
+      <section className={`${session?.user.role==="technical"? "": "w-fit border border-gray-500 rounded-2xl p-2"}`}>
         {session?.user.role ==="admin"?
         <table className="border-collapse">
           <thead>
-            <tr className="text-sm text-gray-400 border-b border-gray-400">
+            <tr className="text-sm text-gray-400 border-b border-gray-500">
               <th className="px-4 py-2 text-left">Atualizado em</th>
               <th className="px-4 py-2 text-left">Id</th>
               <th className="px-4 py-2 text-left">Título</th>
@@ -60,7 +60,7 @@ export function Calls() {
 
           <tbody>
             {calls.map(call => (
-              <tr key={call.id} className="border-b border-gray-400 last:border-b-0" >
+              <tr key={call.id} className="border-b border-gray-500 last:border-b-0" >
                 <td className="px-4 py-2 text-xs text-gray-200">
                   {call.updatedAt}
                 </td>
