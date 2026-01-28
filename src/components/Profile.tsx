@@ -51,7 +51,7 @@ export function Profile({ isOpen, onClose }: ModalProps) {
       <div className="fixed inset-0 bg-black/60 z-40"/>
 
       {/* Modal */}
-      <div className="fixed left-200 top-40 w-fit h-fit bg-gray-600 rounded-2xl z-50 p-6" onClick={(e) => e.stopPropagation()}>
+      <div className="fixed left-170 top-40 w-fit h-fit min-w-100 bg-gray-600 rounded-2xl z-50 p-6">
         <div>
           <button onClick={onClose} className="absolute top-4 right-4">
             <img src={close} alt="Fechar" />

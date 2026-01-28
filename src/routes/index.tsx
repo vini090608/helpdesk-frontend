@@ -18,7 +18,6 @@ import { CallDetails } from "../pages/CallDetails"
 import { Technicals } from "../pages/Technicals"
 import { Services } from "../pages/Services"
 import { Clients } from "../pages/Clients"
-import { Profile } from "../pages/Profile"
 
 export function Index(){
     const user = useAuth()
@@ -56,11 +55,7 @@ export function Index(){
                 :
                     ""
                 }
-
-
-                <Route path="/Profile" element={<Profile />} />
             </Route>
-
             <Route path="*" element={<NotFound/>}/>
         </Routes>
         </BrowserRouter>

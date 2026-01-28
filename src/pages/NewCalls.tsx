@@ -36,6 +36,7 @@ export function NewCalls() {
 
         const timer = setTimeout(() => {
             setShowAlert(false);
+            window.location.reload()
         }, 1000);
 
         return () => clearTimeout(timer);
