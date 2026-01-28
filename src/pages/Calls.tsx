@@ -29,7 +29,10 @@ export function Calls() {
   
   async function Processing(id: number) {
       try {
-          const data = {status : "processing"}
+          const data = {
+            status : "processing",
+            technical_id: session?.user.id
+          }
 
           await api.patch(`/calls/${id}`, data)
           window.location.reload()

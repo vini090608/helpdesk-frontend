@@ -75,7 +75,9 @@ export function CallDetails(){
     
     async function Opening() {
         try {
-            const data = {status : "open"}
+            const data = {
+                status : "open"
+            }
             
 
             await api.patch(`/calls/${id}`, data)
@@ -98,7 +100,10 @@ export function CallDetails(){
 
     async function Processing() {
         try {
-            const data = {status : "processing"}
+            const data = {
+                status : "processing",
+                technical_id: session?.user.id
+            }
 
             await api.patch(`/calls/${id}`, data)
             window.location.reload()
