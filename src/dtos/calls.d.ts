@@ -6,11 +6,7 @@ type CallAPIResponse = {
     describe: string
     status: CallAPIStatus
     serviceAmount: number
-    services: {
-        name: string
-        amount: number
-        status: ServiceStatus
-    }
+    servicesArray: String[]
     amount: Number
     userId: string
     serviceName: string

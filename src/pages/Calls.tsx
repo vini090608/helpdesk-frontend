@@ -20,6 +20,12 @@ export function Calls() {
   const [calls, setCalls] = useState<CallAPIResponse[]>([])
   const { session, isLoading } = useAuth()
   const navigate = useNavigate()
+  const formatDate = (date: string | Date) =>
+    new Intl.DateTimeFormat("pt-BR", {
+      dateStyle: "short",
+      timeStyle: "short",
+    }).format(new Date(date));
+
   
   async function Processing(id: number) {
       try {
@@ -84,7 +90,7 @@ export function Calls() {
         Meus chamados
       </h1>
 
-      <section className={`${session?.user.role==="technical"? "": "w-fit border border-gray-500 rounded-2xl p-2"}`}>
+      <section className={`${session?.user.role==="technical"? null: "w-fit border border-gray-500 rounded-2xl p-2"}`}>
         {session?.user.role ==="admin"?
         <table className="border-collapse">
           <thead>
@@ -104,7 +110,7 @@ export function Calls() {
             {calls.map(call => (
               <tr key={call.id} className="border-b border-gray-500 last:border-b-0" >
                 <td className="px-4 py-2 text-xs text-gray-200">
-                  {call.updatedAt}
+                  <p>{formatDate(call.updatedAt)}</p>
                 </td>
                 <td className="px-4 py-2 text-xs text-gray-200 font-semibold">
                   {call.id}
@@ -119,20 +125,20 @@ export function Calls() {
                   R$ {call.serviceAmount.toFixed(2)}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
-                  {call.client ? call.client.name : ""}
+                  {call.client ? call.client.name : null}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
                   {call.technical ? call.technical.name : "Técnico não definido"}
                 </td>
                 <td className="px-4 py-2">
                   <div className={`flex justify-center items-center gap-1 px-1 py-1.5 text-sm text-gray-200 rounded-xl
-                  ${call.status === "open" ? " bg-red-200" : ""}
-                  ${call.status === "processing" ? "bg-blue-200" : ""}
-                  ${call.status === "ended" ? "bg-green-200" : ""} `}>
+                  ${call.status === "open" ? " bg-red-200" : null}
+                  ${call.status === "processing" ? "bg-blue-200" : null}
+                  ${call.status === "ended" ? "bg-green-200" : null} `}>
                     <img src={call.status==="open"? Open : call.status==="processing"? Process : call.status==="ended"? Ended : ""} alt="" />
-                    <p className={`font-medium ${call.status === "open" ? " text-feedback-open" : ""}
-                    ${call.status === "processing" ? "text-feedback-progress" : ""}
-                    ${call.status === "ended" ? "text-feedback-done" : ""} `}>
+                    <p className={`font-medium ${call.status === "open" ? " text-feedback-open" : null}
+                    ${call.status === "processing" ? "text-feedback-progress" : null}
+                    ${call.status === "ended" ? "text-feedback-done" : null} `}>
                       {call.status}
                     </p>
                   </div>
@@ -164,7 +170,7 @@ export function Calls() {
             {calls.map(call => (
               <tr key={call.id} className="border-b border-gray-500 last:border-b-0" >
                 <td className="px-4 py-2 text-xs text-gray-200">
-                  {call.updatedAt}
+                  {formatDate(call.updatedAt)}
                 </td>
                 <td className="px-4 py-2 text-xs text-gray-200 font-semibold">
                   {call.id}
@@ -183,13 +189,13 @@ export function Calls() {
                 </td>
                 <td className="px-4 py-2">
                   <div className={`flex justify-center items-center gap-1 px-1 py-1.5 text-sm text-gray-200 rounded-xl
-                  ${call.status === "open" ? " bg-red-200" : ""}
-                  ${call.status === "processing" ? "bg-blue-200" : ""}
-                  ${call.status === "ended" ? "bg-green-200" : ""} `}>
+                  ${call.status === "open" ? " bg-red-200" : null}
+                  ${call.status === "processing" ? "bg-blue-200" : null}
+                  ${call.status === "ended" ? "bg-green-200" : null} `}>
                     <img src={call.status==="open"? Open : call.status==="processing"? Process : call.status==="ended"? Ended : ""} alt="" />
-                    <p className={`font-medium ${call.status === "open" ? " text-feedback-open" : ""}
-                    ${call.status === "processing" ? "text-feedback-progress" : ""}
-                    ${call.status === "ended" ? "text-feedback-done" : ""} `}>
+                    <p className={`font-medium ${call.status === "open" ? " text-feedback-open" : null}
+                    ${call.status === "processing" ? "text-feedback-progress" : null}
+                    ${call.status === "ended" ? "text-feedback-done" : null} `}>
                       {call.status}
                     </p>
                   </div>
@@ -227,11 +233,11 @@ export function Calls() {
                         </Button>
                       </div>
                     </div>
-                    <p className="font-medium tex-xs">{call.title}</p>
+                    <p className="font-medium tex-xs mt-3">{call.title}</p>
                     <span className="text-xs">{call.serviceName}</span>
 
                     <div className="flex justify-between mt-3">
-                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
                       <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
                     </div>
 
@@ -247,7 +253,7 @@ export function Calls() {
                     </div>
                   </div>
                   :
-                  ""
+                  null
               ))}
               </div>
             </div>
@@ -273,11 +279,11 @@ export function Calls() {
                         </Button>
                       </div>
                     </div>
-                    <p className="font-medium tex-xs">{call.title}</p>
+                    <p className="font-medium tex-xs mt-3">{call.title}</p>
                     <span className="text-xs">{call.serviceName}</span>
 
                     <div className="flex justify-between mt-3">
-                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
                       <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
                     </div>
 
@@ -293,7 +299,7 @@ export function Calls() {
                     </div>
                   </div>
                   :
-                  ""
+                  null
               ))}
               </div>
             </div>
@@ -315,11 +321,11 @@ export function Calls() {
                         </Button>
                       </div>
                     </div>
-                    <p className="font-medium tex-xs">{call.title}</p>
+                    <p className="font-medium tex-xs pt-2">{call.title}</p>
                     <span className="text-xs">{call.serviceName}</span>
 
                     <div className="flex justify-between mt-3">
-                      <p className="text-xs text-gray-300">{call.updatedAt}</p>
+                      <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
                       <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
                     </div>
 
@@ -335,14 +341,14 @@ export function Calls() {
                     </div>
                   </div>
                   :
-                  ""
+                  null
               ))}
               </div>
             </div>
           </div>  
         </section>
         :
-        ""
+        null
         }
         
       </section>

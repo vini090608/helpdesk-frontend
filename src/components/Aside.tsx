@@ -33,16 +33,16 @@ export function Aside() {
     const [profileOpen, setProfileOpen] = useState(false) 
   return (
     <main className=" h-lvh flex bg-gray-100">
-        <aside className="w-1/8 flex flex-col p-3 justify-between">
+        <aside className="w-70 flex flex-col p-3 justify-between">
             <div>
                 <div className="flex m-2 mb-4 gap-2">
                     <img src={hover? LogoOn : LogoOff} alt="" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)} className="h-12" />
                     <div className="flex flex-col">
                         <p className="text-lg text-gray-600 m-0 p-0">HelpDesk</p>
                         <span className="text-xs text-blue-light uppercase">
-                            {user.session?.user.role==="admin"? "Admin" : ""}
-                            {user.session?.user.role==="technical"? "Técnico" : ""}
-                            {user.session?.user.role==="client"? "Cliente" : ""}
+                            {user.session?.user.role==="admin"? "Admin" : null}
+                            {user.session?.user.role==="technical"? "Técnico" : null}
+                            {user.session?.user.role==="client"? "Cliente" : null}
                         </span>
                     </div>
                 </div>
@@ -61,7 +61,7 @@ export function Aside() {
                         Criar chamado
                     </Button>
                 : 
-                    ""
+                    null
                 }
 
 
@@ -72,7 +72,7 @@ export function Aside() {
                         Clientes
                     </Button>
                 : 
-                    ""
+                    null
                 }
 
                 
@@ -83,7 +83,7 @@ export function Aside() {
                         Técnicos
                     </Button>
                 :
-                    ""
+                    null
                 }      
 
                 {user.session?.user.role==="admin"? 
@@ -93,7 +93,7 @@ export function Aside() {
                         Serviços
                     </Button>
                 :
-                    ""
+                    null
                 }   
             </div >
 
