@@ -3,9 +3,15 @@ type CallAPIStatus = "open" | "processing" | "ended"
 type CallAPIResponse = {
     id: number
     title: string
-    description: string
+    describe: string
     status: CallAPIStatus
     serviceAmount: number
+    services: {
+        name: string
+        amount: number
+        status: ServiceStatus
+    }
+    amount: Number
     userId: string
     serviceName: string
     client: {

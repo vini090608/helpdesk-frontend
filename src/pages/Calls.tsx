@@ -3,6 +3,8 @@ import { api } from "../services/api"
 import { useAuth } from "../hooks/useAuth"
 import { Button } from "../components/Button";
 import { useNavigate } from "react-router";
+import { AxiosError } from "axios";
+import { ZodError } from "zod";
 
 import Open from "../assets/icons/circle-help.svg"
 import Process from "../assets/icons/active-clock-2 .svg"
@@ -18,6 +20,48 @@ export function Calls() {
   const [calls, setCalls] = useState<CallAPIResponse[]>([])
   const { session, isLoading } = useAuth()
   const navigate = useNavigate()
+  
+  async function Processing(id: number) {
+      try {
+          const data = {status : "processing"}
+
+          await api.patch(`/calls/${id}`, data)
+          window.location.reload()
+      } catch (error) {
+          console.log(error)
+          
+          if(error instanceof ZodError){
+              return { message: error.issues[0].message}
+          }
+
+          if(error instanceof AxiosError){
+              return { message: error.response?.data.message}
+          }
+
+          return { message: "Não foi possível entrar!" }
+      }
+  }
+
+  async function Ending(id: number) {
+      try {
+          const data = {status : "ended"}
+
+          await api.patch(`/calls/${id}`, data)
+          window.location.reload()
+      } catch (error) {
+          console.log(error)
+          
+          if(error instanceof ZodError){
+              return { message: error.issues[0].message}
+          }
+
+          if(error instanceof AxiosError){
+              return { message: error.response?.data.message}
+          }
+
+          return { message: "Não foi possível entrar!" }
+      }
+  }    
 
   const id = Number(session?.user.id)
 
@@ -177,7 +221,7 @@ export function Calls() {
                         <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(`/CallDetails/${call.id}`)}>
                           <img src={Pencil} alt="" />
                         </Button>
-                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => navigate(-1)}>
+                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => Ending(call.id)}>
                           <img src={Circle} alt="" />
                           <span>Encerrar</span>
                         </Button>
@@ -223,7 +267,7 @@ export function Calls() {
                         <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(`/CallDetails/${call.id}`)}>
                           <img src={Pencil} alt="" />
                         </Button>
-                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => navigate(-1)}>
+                        <Button className="bg-gray-200 h-10 gap-1" onClick={() => Processing(call.id)}>
                           <img src={Clock} alt="" />
                           <span>Iniciar</span>
                         </Button>
