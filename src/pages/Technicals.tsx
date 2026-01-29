@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 import { api } from "../services/api";
+import { useNavigate } from "react-router";
 
+import { Button } from "../components/Button";
 import Perfil from "../assets/user.png"
 import Pencil from "../assets/icons/pen-line.svg";
 import plus from "../assets/icons/inactive/plus1.svg";
-import { Button } from "../components/Button";
 
 export function Technicals() {
     const [user, setUser] = useState<Technical[]>([]);
     const { session, isLoading } = useAuth();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
     if (isLoading) return;
@@ -28,7 +29,7 @@ return (
             <h1 className="text-xl text-blue-dark font-semibold mb-4">
             Técnicos
             </h1>
-            <Button className="w-fit h-fit py-3 px-3">
+            <Button onClick={() => navigate("/LoginTechnicals")} className="w-fit h-fit py-3 px-3">
                 <img src={plus} alt="" />
                 Novo
             </Button>

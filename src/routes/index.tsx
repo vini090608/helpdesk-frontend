@@ -18,6 +18,7 @@ import { CallDetails } from "../pages/CallDetails"
 import { Technicals } from "../pages/Technicals"
 import { Services } from "../pages/Services"
 import { Clients } from "../pages/Clients"
+import { LoginTechnicals } from "../pages/LoginTechnicals"
 
 export function Index(){
     const user = useAuth()
@@ -40,18 +41,13 @@ export function Index(){
                 }
 
                 {user.session?.user.role==="admin"? 
+                <>
                     <Route path="/Technicals" element={<Technicals />} />
-                :
-                    null
-                }
-                
-                {user.session?.user.role==="admin"? 
+                    <Route path="/LoginTechnicals" element={<LoginTechnicals />} />
                     <Route path="/Services" element={<Services />} />
-                :
-                    null
-                }   
-                {user.session?.user.role==="admin"?                     
                     <Route path="/Clients" element={<Clients />} />
+                    
+                </>            
                 :
                     null
                 }
