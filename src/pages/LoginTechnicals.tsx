@@ -40,40 +40,40 @@ export function LoginTechnicals() {
 
 
   async function onSubmit(e: React.FormEvent){
-          e.preventDefault()
-  
-          try {
-              setIsLoading(true)
-  
-              const data = technicallsSchema.parse({
-                  name, 
-                  email, 
-                  password,
-                  role: "technical",
-                  hour
-              })
-  
-              await api.post("/users", data)
-              console.log(data)
-              // navigate(-1)  
-  
-          } catch (error) {
-              console.log(error)
-  
-              if (error instanceof ZodError){
-                  return alert(error.issues[0].message)
-              }
-  
-              if (error instanceof AxiosError){
-                  return alert(error.response?.data.message)
-              }
-  
-              alert("Não foi possível cadastrar!")
-          } finally {
-              setIsLoading(false)
-          }
-  
-      }
+    e.preventDefault()
+
+    try {
+        setIsLoading(true)
+
+        const data = technicallsSchema.parse({
+            name, 
+            email, 
+            password,
+            role: "technical",
+            hour
+        })
+
+        await api.post("/users", data)
+        console.log(data)
+        // navigate(-1)  
+
+    } catch (error) {
+        console.log(error)
+
+        if (error instanceof ZodError){
+            return alert(error.issues[0].message)
+        }
+
+        if (error instanceof AxiosError){
+            return alert(error.response?.data.message)
+        }
+
+        alert("Não foi possível cadastrar!")
+    } finally {
+        setIsLoading(false)
+    }
+
+  }
 
   return (
      <main className="p-8">

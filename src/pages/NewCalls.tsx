@@ -103,7 +103,7 @@ export function NewCalls() {
                     <Select required legend="Categoria de serviço" onChange={(e) => { const service = services.find( service => service.name === e.target.value );  setSelectedService(service)}}>
                         {services.map(service => (
                             <option>
-                            {service.name}
+                            {service.status==="active"? service.name : null}
                             </option>
                         ))}
                     </Select>
