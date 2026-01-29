@@ -7,11 +7,15 @@ import { Button } from "../components/Button";
 import Perfil from "../assets/user.png"
 import Pencil from "../assets/icons/pen-line.svg";
 import plus from "../assets/icons/inactive/plus1.svg";
+import { UploadUsers } from "../components/UploadUsers";
 
 export function Technicals() {
     const [user, setUser] = useState<Technical[]>([]);
     const { session, isLoading } = useAuth();
     const navigate = useNavigate();
+
+    const [param, setParam] = useState("")
+    const [upload, setUpload] = useState(false);
 
     useEffect(() => {
     if (isLoading) return;
@@ -19,7 +23,6 @@ export function Technicals() {
 
     api.get("/users/").then((response) => {
     setUser(response.data.technicals);
-    console.log(response.data.technicals.hour)
     });
     }, [isLoading, session]);
 
@@ -67,7 +70,7 @@ return (
 
 
                         <td className="px-2 py-2">
-                            <Button className="bg-gray-500 w-8 h-8">
+                            <Button onClick={() => (setUpload(true), setParam(user.id))} className="bg-gray-500 w-8 h-8">
                             <img src={Pencil} alt="" />
                             </Button>
                         </td>
@@ -76,6 +79,7 @@ return (
                 </tbody>
             </table>
         </section>
+        <UploadUsers isOpen={upload} onClose={() => setUpload(false)} Search={Number(param)}/>
     </main>
 );
 }

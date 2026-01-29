@@ -6,13 +6,15 @@ import Perfil from "../assets/user.png"
 import trash from "../assets/icons/trash.svg";
 import Pencil from "../assets/icons/pen-line.svg";
 import { Button } from "../components/Button";
-
-
+import { UploadUsers } from "../components/UploadUsers";
 
 export function Clients() {
     const [user, setUser] = useState<Client[]>([]);
     const { session, isLoading } = useAuth();
     // const navigate = useNavigate();
+
+    const [param, setParam] = useState("")
+    const [upload, setUpload] = useState(false);
 
     async function Delete(id: number) {
         try {
@@ -67,7 +69,7 @@ return (
                         </td>
 
                         <td className="px-2 py-2">
-                            <Button className="bg-gray-500 w-8 h-8">
+                            <Button onClick={() => (setUpload(true), setParam(user.id))} className="bg-gray-500 w-8 h-8">
                             <img src={Pencil} alt="" />
                             </Button>
                         </td>
@@ -76,6 +78,7 @@ return (
                 </tbody>
             </table>
         </section>
+        <UploadUsers isOpen={upload} onClose={() => setUpload(false)} Search={Number(param)}/>
     </main>
 );
 }
