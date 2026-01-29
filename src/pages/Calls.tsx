@@ -125,7 +125,7 @@ export function Calls() {
                   {call.serviceName}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
-                  R$ {call.serviceAmount.toFixed(2)}
+                  R$ {call.amount.toFixed(2)}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
                   {call.client ? call.client.name : null}
@@ -185,7 +185,7 @@ export function Calls() {
                   {call.serviceName}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
-                  R$ {call.serviceAmount.toFixed(2)}
+                  R$ {call.amount.toFixed(2)}
                 </td>
                 <td className="px-4 py-2 text-sm text-gray-200">
                   {call.technical ? call.technical.name : "Técnico não definido"}
@@ -241,7 +241,7 @@ export function Calls() {
 
                     <div className="flex justify-between mt-3">
                       <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
-                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                      <p className="text-xs text-gray-300">R$ {call.amount.toFixed(2)}</p>
                     </div>
 
                     <div className="h-0.5 bg-gray-500 my-2"></div>
@@ -287,7 +287,7 @@ export function Calls() {
 
                     <div className="flex justify-between mt-3">
                       <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
-                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                      <p className="text-xs text-gray-300">R$ {call.amount.toFixed(2)}</p>
                     </div>
 
                     <div className="h-0.5 bg-gray-500 my-2"></div>
@@ -319,7 +319,7 @@ export function Calls() {
                     <div className="flex items-center gap-25 justify-between">
                       <span className="text-xs text-gray-400">{call.id}</span>
                       <div className="flex gap-2">
-                        <Button className="bg-gray-500 w-14 h-10" onClick={() => navigate(`/CallDetails/${call.id}`)}>
+                        <Button className="bg-gray-500 w-10 h-10" onClick={() => navigate(`/CallDetails/${call.id}`)}>
                           <img src={Eye} alt="" />
                         </Button>
                       </div>
@@ -329,7 +329,7 @@ export function Calls() {
 
                     <div className="flex justify-between mt-3">
                       <p className="text-xs text-gray-300">{formatDate(call.updatedAt)}</p>
-                      <p className="text-xs text-gray-300">R$ {call.serviceAmount.toFixed(2)}</p>
+                      <p className="text-xs text-gray-300">R$ {call.amount.toFixed(2)}</p>
                     </div>
 
                     <div className="h-0.5 bg-gray-500 my-2"></div>

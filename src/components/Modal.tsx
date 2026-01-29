@@ -27,7 +27,7 @@ export default function Modal({ isOpen, onClose }: ModalProps) {
 
       {/* Modal */}
       <div
-        className="absolute bottom-4 left-1/7 w-50 
+        className="absolute bottom-4 left-2/11 w-50 
                    bg-gray-100 rounded-2xl p-3 z-40"
         onClick={(e) => e.stopPropagation()}
       >

@@ -76,7 +76,8 @@ export function CallDetails(){
     async function Opening() {
         try {
             const data = {
-                status : "open"
+                status : "open",
+                technical_id: undefined
             }
             
 
